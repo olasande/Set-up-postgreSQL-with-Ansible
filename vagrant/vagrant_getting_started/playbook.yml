@@ -1,0 +1,10 @@
+---
+
+- name: postgres_server
+  hosts: postgres_server
+  become: yes
+  roles:
+    - general
+    - apache
+
+      #Prøve installere postgres på samme måte. Kanskje også git?
