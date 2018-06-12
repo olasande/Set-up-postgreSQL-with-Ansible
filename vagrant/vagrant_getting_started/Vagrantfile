@@ -1,6 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+#The reason why ansible hosts.yml file doesn't work after launch is due to ansible version being to old.
+# Need to find a way to get vagrantfile to update to newer version of ansible.
+
 Vagrant.configure("2") do |config|
   config.vm.define "ansible_control" do |ansible_control|
     ansible_control.vm.box = "ubuntu/trusty64"
@@ -14,7 +17,7 @@ Vagrant.configure("2") do |config|
      sudo apt-get purge ansible
      sudo apt-get install software-properties-common -y
   	 sudo apt-add repository ppa:ansible/ansible -y
-  	 sudo apt-get update -y
+  	 sudo apt-get update
   	 sudo apt-get install ansible -y
    SHELL
  end
