@@ -18,6 +18,11 @@
     - python-psycopg2 # required for Ansible to interact with postgres
   tags: packages
 
+- replace:
+    path: /etc/postgresql/9.3/main/pg_hba.conf
+    regexp: 'peer'
+    replace: 'trust'
+
 - name: Ensure the PostgreSQL service is running
   service: name=postgresql state=started enabled=yes
 
