@@ -22,9 +22,11 @@
     path: /etc/postgresql/9.3/main/pg_hba.conf
     regexp: 'peer'
     replace: 'trust'
+# Potentially unnecessary if restart of postgresql work as intended.
 
-- name: Ensure the PostgreSQL service is running
-  service: name=postgresql state=started enabled=yes
+
+- name: Restart the PostgreSQL server
+  service: name=postgresql state=reloaded enabled=yes
 
 #- name: Allow password authentication for local socket users
 #  sudo: yes

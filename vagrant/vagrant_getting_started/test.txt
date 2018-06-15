@@ -1,0 +1,3 @@
+Opprettet schema test
+user i schema = ola
+pw: pw
