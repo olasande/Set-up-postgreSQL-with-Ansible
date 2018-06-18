@@ -1,6 +1,6 @@
 ---
 
-- name: postgres_server
+- name: Install postgres_server
   hosts: postgres_server
   become: yes
   vars_files:
@@ -10,5 +10,11 @@
     - apache
     - PostgreSQL
 
-
-      #Prøve installere postgres på samme måte. Kanskje også git?
+- name: Install ambari_server
+  hosts: ambari_server
+  become: yes
+  roles:
+    - general
+    - apache
+    - GoogleChrome
+    - ambari

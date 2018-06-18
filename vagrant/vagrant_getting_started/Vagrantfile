@@ -5,15 +5,16 @@
 # Need to find a way to get vagrantfile to update to newer version of ansible.
 
 Vagrant.configure("2") do |config|
-  config.vm.define "ansible_control" do |ansible_control|
-    ansible_control.vm.box = "ubuntu/trusty64"
-    ansible_control.vm.network "private_network", type: "dhcp"
-    ansible_control.vm.hostname = "ansible-control"
-    ansible_control.vm.synced_folder ".", "/vagrant", type: "nfs"
-    ansible_control.vm.provider "virtualbox" do |vb|
+  config.vm.define "ansible_server" do |ansible_server|
+    ansible_server.vm.box = "ubuntu/trusty64"
+    ansible_server.vm.network "private_network", type: "dhcp"
+    ansible_server.vm.hostname = "ansible-server"
+    ansible_server.vm.synced_folder ".", "/vagrant", type: "nfs"
+    ansible_server.vm.provider "virtualbox" do |vb|
+      vb.memory = 720;
   	  # vb.gui = true
     end
-    ansible_control.vm.provision "shell", inline: <<-SHELL
+    ansible_server.vm.provision "shell", inline: <<-SHELL
      sudo apt-get update
      sudo apt-get install software-properties-common -y
   	 sudo apt-add-repository ppa:ansible/ansible -y
@@ -21,15 +22,26 @@ Vagrant.configure("2") do |config|
   	 sudo apt-get install ansible -y
    SHELL
  end
-  # ansible_control.vm.network "forwarded_port", guest: 8080, host: 8080
+  # ansible_server.vm.network "forwarded_port", guest: 8080, host: 8080
 
-config.vm.define "postgres_server" do |postgres_server|
-  postgres_server.vm.box = "ubuntu/trusty64"
-  postgres_server.vm.network "private_network", type: "dhcp"
-  postgres_server.vm.hostname ="postgres-server"
-  postgres_server.vm.synced_folder ".", "/vagrant", type: "nfs"
-  postgres_server.vm.provider "virtualbox" do |vb|
-    # vb.gui = true
-   end
- end
+  config.vm.define "postgres_server" do |postgres_server|
+    postgres_server.vm.box = "ubuntu/trusty64"
+    postgres_server.vm.network "private_network", type: "dhcp"
+    postgres_server.vm.hostname ="postgres-server"
+    postgres_server.vm.synced_folder ".", "/vagrant", type: "nfs"
+    postgres_server.vm.provider "virtualbox" do |vb|
+      vb.memory = 720;
+      # vb.gui = true
+    end
+  end
+  config.vm.define "ambari_server" do |ambari_server|
+    ambari_server.vm.box = "ubuntu/trusty64"
+    ambari_server.vm.network "private_network", type: "dhcp"
+    ambari_server.vm.hostname ="ambari-server"
+    ambari_server.vm.synced_folder ".", "/vagrant", type: "nfs"
+    ambari_server.vm.provider "virtualbox" do |vb|
+      vb.memory = 720;
+      # vb.gui = true
+    end
+  end
 end

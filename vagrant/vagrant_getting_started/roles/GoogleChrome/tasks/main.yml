@@ -1,0 +1,20 @@
+---
+
+- name: Add Google Chrome repo
+  get_url:
+    url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    dest: /etc/apt/sources.list.d/chrome.list
+
+- name: Add Google Chrome key
+  apt_key:
+    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+    state: present
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Install Google Chrome
+  apt: pkg=google-chrome-stable state=present
